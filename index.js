@@ -26,10 +26,16 @@ async function main() {
 
   const lista = ['Rick Sanchez', 'Morty Smith', 'Summer Smith']
 
+const db = client.db(dbName)
+const collection = db.collection('item')
+
   //READ All - [GET] /item
-  app.get('/item', function (req, res) {
-    //Pegamos a lista e enviamos como resposta HTTP
-    res.send(lista)
+  app.get('/item', async function (req, res) {
+    //Obter todos os documentos dentro da collection
+    const documentos = await collection.find().toArray()
+
+    //Pegamos os documentos e enviamos como resposta HTTP
+    res.send(documentos)
   })
 
   //Sinalizamos para o express que vamos usar json
